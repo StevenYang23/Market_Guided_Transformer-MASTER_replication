@@ -80,6 +80,7 @@ class SequenceModel():
             raise ValueError("model has not been initialized")
 
         self.train_optimizer = optim.Adam(self.model.parameters(), self.lr)
+        print(f"[Check] Model is being loaded onto device: {self.device}")
         self.model.to(self.device)
 
     def loss_fn(self, pred, label):
@@ -152,24 +153,41 @@ class SequenceModel():
 
     def load_param(self, param_path):
         self.model.load_state_dict(torch.load(param_path, map_location=self.device))
-        self.fitted = 'Previously trained.'
+        # self.fitted = 'Previously trained.'
+        self.fitted = 999
 
     def fit(self, dl_train, dl_valid=None):
         train_loader = self._init_data_loader(dl_train, shuffle=True, drop_last=True)
         best_param = None
+        best_ic = -np.inf
         for step in range(self.n_epochs):
             train_loss = self.train_epoch(train_loader)
             self.fitted = step
             if dl_valid:
                 predictions, metrics = self.predict(dl_valid)
+                valid_ic = metrics['IC']
                 print("Epoch %d, train_loss %.6f, valid ic %.4f, icir %.3f, rankic %.4f, rankicir %.3f." % (step, train_loss, metrics['IC'],  metrics['ICIR'],  metrics['RIC'],  metrics['RICIR']))
-            else: print("Epoch %d, train_loss %.6f" % (step, train_loss))
-        
-            if train_loss <= self.train_stop_loss_thred:
+                # save the best model param according to valid IC
+                if valid_ic > best_ic:
+                    best_ic = valid_ic
+                    best_param = copy.deepcopy(self.model.state_dict())
+                    print(f"  -> Best model updated at epoch {step}, valid IC: {best_ic:.4f}")
+            else: 
+                print("Epoch %d, train_loss %.6f" % (step, train_loss))
                 best_param = copy.deepcopy(self.model.state_dict())
-                torch.save(best_param, f'{self.save_path}/{self.save_prefix}_{self.seed}.pkl')
+
+            if train_loss <= self.train_stop_loss_thred:
+                # best_param = copy.deepcopy(self.model.state_dict())
+                # torch.save(best_param, f'{self.save_path}/{self.save_prefix}_{self.seed}.pkl')
+                print(f"Early stop at epoch {step}, train_loss {train_loss:.6f} <= threshold {self.train_stop_loss_thred}")
                 break
         
+        # load the best model after training
+        if best_param is not None:
+            self.model.load_state_dict(best_param)
+            print(f"Best model loaded (valid IC: {best_ic:.4f})")
+            # save the best model
+            torch.save(best_param, f'{self.save_path}/{self.save_prefix}_{self.seed}.pkl')
 
     def predict(self, dl_test):
         if self.fitted<0:
