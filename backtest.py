@@ -26,6 +26,10 @@ from master      import MASTERModel
 from transformer import TransformerModel
 from gat         import GATModel
 from dtml        import DTMLModel
+from gru_model   import GRUModel
+from lstm_model  import LSTMModel
+from tcn_model   import TCNModel
+from xgboost_model import XGBoostModel
 
 
 # ════════════════════════════════════════════════════════════════════════════
@@ -77,6 +81,37 @@ def load_model(model_type, universe, prefix, seed, d_model=256, dropout=0.5, GPU
             dropout=dropout, **common,
         )
         param_path = f'model/{universe}_{prefix}_dtml_{seed}.pkl'
+
+    elif model_type == 'gru':
+        model = GRUModel(
+            d_feat=158, d_model=d_model, gru_layers=2,
+            dropout=dropout, **common,
+        )
+        param_path = f'model/{universe}_{prefix}_gru_{seed}.pkl'
+
+    elif model_type == 'lstm':
+        model = LSTMModel(
+            d_feat=158, d_model=d_model, lstm_layers=2,
+            dropout=dropout, **common,
+        )
+        param_path = f'model/{universe}_{prefix}_lstm_{seed}.pkl'
+
+    elif model_type == 'tcn':
+        model = TCNModel(
+            d_feat=158, d_model=d_model,
+            num_layers=4, kernel_size=3, dropout=dropout,
+            **common,
+        )
+        param_path = f'model/{universe}_{prefix}_tcn_{seed}.pkl'
+
+    elif model_type == 'xgboost':
+        model = XGBoostModel(
+            d_feat=158, d_model=d_model,
+            n_estimators=200, max_depth=6, learning_rate=0.1,
+            subsample=0.8, colsample_bytree=0.8,
+            **common,
+        )
+        param_path = f'model/{universe}_{prefix}_xgboost_{seed}.pkl'
 
     else:
         raise ValueError(f'Unknown model_type: {model_type}')
@@ -293,7 +328,7 @@ def main():
     parser.add_argument('--prefix',      type=str,   default='opensource',
                         choices=['original', 'opensource'])
     parser.add_argument('--model_type',  type=str,   default='transformer',
-                        choices=['master', 'transformer', 'gat', 'dtml'])
+                        choices=['master', 'transformer', 'gat', 'dtml', 'gru', 'lstm', 'tcn', 'xgboost'])
     parser.add_argument('--seeds',       type=int,   nargs='+', default=[0,1,2,3,4])
     parser.add_argument('--top_k',       type=int,   default=30)
     parser.add_argument('--GPU',         type=int,   default=0)
