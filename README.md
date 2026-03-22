@@ -40,6 +40,37 @@ We use **open-source market data** from [chenditc/investment_data releases](http
 
 ---
 
+## Results
+
+We run **backtesting on both the CSI300 and CSI800 universes**. Below, each figure is shown as a **pair**: **CSI300 on the left**, **CSI800 on the right** (use the same layout when generating new plots).
+
+<p align="center">
+  <img src="result_img/csi300_ar_ir_charts.png" width="48%" alt="CSI300 — AR / IR charts" />
+  <img src="result_img/csi800_ar_ir_charts.png" width="48%" alt="CSI800 — AR / IR charts" />
+</p>
+
+<p align="center">
+  <img src="result_img/csi300_ar_ir_charts_net_ar.png" width="48%" alt="CSI300 — net AR" />
+  <img src="result_img/csi800_ar_ir_charts_net_ar.png" width="48%" alt="CSI800 — net AR" />
+</p>
+
+<p align="center">
+  <img src="result_img/csi300_ar_ir_charts_net_ir.png" width="48%" alt="CSI300 — net IR" />
+  <img src="result_img/csi800_ar_ir_charts_net_ir.png" width="48%" alt="CSI800 — net IR" />
+</p>
+
+<p align="center">
+  <img src="result_img/csi300_ar_ir_charts_net_cumexcess.png" width="48%" alt="CSI300 — net cumulative excess" />
+  <img src="result_img/csi800_ar_ir_charts_net_cumexcess.png" width="48%" alt="CSI800 — net cumulative excess" />
+</p>
+
+<p align="center">
+  <img src="result_img/csi300_ar_ir_charts_turnover.png" width="48%" alt="CSI300 — turnover" />
+  <img src="result_img/csi800_ar_ir_charts_turnover.png" width="48%" alt="CSI800 — turnover" />
+</p>
+
+---
+
 ## Citation
 
 If you use the original method, data recipe, or released artifacts, cite the paper:
