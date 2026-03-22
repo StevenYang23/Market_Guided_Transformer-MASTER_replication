@@ -7,3 +7,6 @@ scores/*.pkl
 !scores/csi300_0.csv
 !scores/csi800_0.csv
 .DS_Store
+
+# IDE — local settings differ per machine
+.vscode/
