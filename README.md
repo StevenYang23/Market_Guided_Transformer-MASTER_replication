@@ -50,16 +50,6 @@ We run **backtesting on both the CSI300 and CSI800 universes**. Below, each figu
 </p>
 
 <p align="center">
-  <img src="result_img/csi300_ar_ir_charts_net_ar.png" width="48%" alt="CSI300 — net AR" />
-  <img src="result_img/csi800_ar_ir_charts_net_ar.png" width="48%" alt="CSI800 — net AR" />
-</p>
-
-<p align="center">
-  <img src="result_img/csi300_ar_ir_charts_net_ir.png" width="48%" alt="CSI300 — net IR" />
-  <img src="result_img/csi800_ar_ir_charts_net_ir.png" width="48%" alt="CSI800 — net IR" />
-</p>
-
-<p align="center">
   <img src="result_img/csi300_ar_ir_charts_net_cumexcess.png" width="48%" alt="CSI300 — net cumulative excess" />
   <img src="result_img/csi800_ar_ir_charts_net_cumexcess.png" width="48%" alt="CSI800 — net cumulative excess" />
 </p>
