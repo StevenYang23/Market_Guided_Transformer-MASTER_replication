@@ -55,6 +55,13 @@ We run **backtesting on both the CSI300 and CSI800 universes**. We evaluate mult
   <img src="result_img/csi800_ar_ir_charts_turnover.png" width="48%" alt="CSI800 — turnover" />
 </p>
 
+Overall comparison across all models:
+
+<p align="center">
+  <img src="result_img/Result_chart.png" width="80%" alt="Comparison of all models" />
+</p>
+
+
 ---
 
 ## Citation
