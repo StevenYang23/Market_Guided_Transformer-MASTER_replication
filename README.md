@@ -12,12 +12,6 @@ For comparison with MASTER, this repository also implements **seven baseline mod
 
 ---
 
-## Notes from the upstream release
-
-The linked Qlib version is not maintained by the paper authors; there can be inconsistencies with this codebase or the paper. The authors published files under `qlib-update` for common Qlib issues. For validation, all samples are fed to the model and NaN labels are dropped only when computing metrics; see upstream discussions on `learn_processor` vs `infer_processor` and `qlib-update/pytorch_master_ts.py` (`MASTERModel`: `fit`, `test_epoch`, `predict`) if you need to align behavior.
-
----
-
 ## Usage
 
 1. **Dependencies**  
@@ -43,14 +37,6 @@ The linked Qlib version is not maintained by the paper authors; there can be inc
 We use **open-source market data** from [chenditc/investment_data releases](https://github.com/chenditc/investment_data/releases), processed in the Qlib-style pipeline consistent with the upstream MASTER release. Place the prepared train/validation/test files under `data/` as required by the training script.
 
 **Tensor layout** (data loader): shape `(N, T, F)` — `N` stocks per prediction date (~300 for CSI300, ~800 for CSI800), `T = 8` (lookback), `F = 222` (factors, market features, and label). Market reference columns are summarized in `data/csi_market_information.csv` in setups that include it.
-
-**Preprocessing** (summary): feature **RobustZScoreNorm** and **Fillna**; training labels use DropNA, **DropExtremeLabel** (e.g. 5% extremes), and **CSZscoreNorm** — see comments in `base_model.py` → `SequenceModel.train_epoch` and upstream Qlib processor docs for details.
-
----
-
-## Qlib reference implementation
-
-A full Qlib benchmark implementation lives at [SJTU-Quant/qlib — MASTER example](https://github.com/SJTU-Quant/qlib/tree/main/examples/benchmarks/MASTER). It may use different universes, indices, or default data than this repo; use the opensource data link above if you want to align timespan and CSI800-style setups.
 
 ---
 
